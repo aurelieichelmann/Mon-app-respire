@@ -1,0 +1,590 @@
+/* ==========================================
+   1. VARIABLES GLOBALES (:root)
+   ========================================== */
+:root {
+  /* Mode Jour : Palette "Lumière & Fraîcheur" */
+  --fond: #f8f9fa;            /* Blanc cassé très propre */
+  --card-fond: #ffffff;       /* Blanc pur pour la carte */
+  --cercle: #a0c4ff;          /* Bleu pastel doux */
+  --cercle-glow: rgba(160, 196, 255, 0.4); 
+  --texte: #2d3436;          /* Gris foncé bleuté pour le confort */
+  --bouton-fond: #f1f3f5;     /* Gris très clair */
+  --bouton-hover: #e9ecef;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* Ombre beaucoup plus légère */
+}
+
+/* Mode Nuit : Palette "Profondeur & Sérénité" */
+.dark-mode {
+  --fond: #0f172a;            /* Bleu nuit très profond */
+  --card-fond: #1e293b;       /* Gris bleuté sombre */
+  --cercle: #5eead4;          /* Vert d'eau lumineux (teal) */
+  --cercle-glow: rgba(94, 234, 212, 0.2);
+  --texte: #f1f5f9;          /* Blanc bleuté très doux */
+  --bouton-fond: #334155;
+  --bouton-hover: #475569;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================
+   2. STYLES BASE & BODY (CORRIGÉ MOBILE)
+   ========================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--fond);
+  color: var(--texte);
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color 0.6s ease, color 0.6s ease;
+  overflow-x: hidden;
+}
+
+.app-container {
+  background-color: var(--fond);
+  color: var(--texte);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.6s ease, color 0.6s ease;
+  overflow: hidden;
+}
+
+/* ==========================================
+   3. HEADER & MENU DÉROULANT (CORRIGÉ)
+   ========================================== */
+.app-header {
+  position: relative; /* Évite de décaler le flux principal */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  z-index: 100;
+  width: 100%;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-container {
+  position: relative;
+}
+
+/* Bouton hamburger */
+.icon-btn {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--texte);
+}
+
+.icon-btn:hover {
+  background-color: var(--bouton-fond);
+}
+
+/* Menu déroulant */
+.dropdown-menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 220px;
+  background-color: var(--card-fond);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 10px;
+  z-index: 1000;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item, 
+.menu-action-btn {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 14px;
+  color: var(--texte);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item:hover, 
+.menu-action-btn:hover,
+.menu-item.active {
+  background-color: var(--bouton-fond);
+}
+
+.menu-divider {
+  border: none;
+  height: 1px;
+  background-color: var(--bouton-fond);
+  margin: 6px 0;
+  list-style: none;
+}
+
+/* ==========================================
+   4. LAYOUT & CARTE PRINCIPALE
+   ========================================== */
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  padding: 20px;
+}
+
+.app-view {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background-color: var(--card-fond);
+  padding: 35px 24px;
+  border-radius: 36px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.6s ease, box-shadow 0.6s ease;
+}
+/* ==========================================
+   5. CERCLE DE RESPIRATION
+   ========================================== */
+.card-header h1 {
+  font-size: 1.5rem;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.cercle-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 220px; /* Agrandit l'espace du cercle */
+  width: 100%;
+  margin: 10px 0;
+}
+
+.cercle {
+  width: 150px;   /* Cercle plus grand et impactant */
+  height: 150px;
+  background: linear-gradient(135deg, var(--cercle), var(--bouton-hover));
+  border-radius: 50%;
+  box-shadow: 0 0 50px var(--cercle-glow), inset 0 0 20px rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: background 0.6s ease, box-shadow 0.6s ease;
+  animation: respirerOrganique 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+border: 8px solid rgba(255, 255, 255, 0.1);
+  background: conic-gradient(var(--cercle) var(--progress, 0%), transparent 0%);
+}
+
+.cercle-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--texte);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: 0.5px;
+}
+
+@keyframes respirerOrganique {
+  0% {
+    transform: scale(0.85) rotate(0deg);
+    border-radius: 50%;
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.25) rotate(3deg);
+    border-radius: 46% 54% 52% 48% / 52% 46% 54% 48%;
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.85) rotate(0deg);
+    border-radius: 50%;
+    opacity: 0.75;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column; /* Passe les boutons en colonne pour un look plus "app mobile pro" */
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-rhythm {
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: none;
+  background-color: var(--bouton-fond);
+  color: var(--texte);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-rhythm:hover {
+  background-color: var(--bouton-hover);
+  transform: translateY(-2px);
+}
+
+.btn-rhythm.active {
+  background-color: var(--cercle);
+  color: #ffffff;
+  box-shadow: 0 4px 15px var(--cercle-glow);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   6. JOURNAL & HISTORIQUE
+   ========================================== */
+.journal-card {
+  gap: 16px;
+}
+
+.affirmation-box {
+  background-color: var(--bouton-fond);
+  padding: 12px 15px;
+  border-radius: 18px;
+  font-style: italic;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  width: 100%;
+}
+
+.sparkles {
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.card-divider {
+  border: 0;
+  height: 1px;
+  background-color: var(--bouton-fond);
+  width: 100%;
+  margin: 0;
+}
+
+.mood-tracker {
+  width: 100%;
+}
+
+.mood-tracker h3 {
+  font-size: 0.95rem;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.mood-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.mood-btn {
+  background: var(--bouton-fond);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 6px 2px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  transition: all 0.2s ease;
+}
+
+.mood-emoji {
+  font-size: 1.1rem;
+}
+
+.mood-label {
+  font-size: 0.6rem;
+  font-family: inherit;
+  color: var(--texte);
+  font-weight: 600;
+}
+
+.mood-btn:hover, .mood-btn.selected {
+  border-color: var(--cercle);
+  background: var(--card-fond);
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid var(--bouton-fond);
+  background-color: var(--fond);
+  color: var(--texte);
+  border-radius: 14px;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  resize: none;
+  outline: none;
+  margin-bottom: 6px;
+}
+
+textarea:focus {
+  border-color: var(--cercle);
+}
+
+.btn-save {
+  width: 100%;
+  padding: 10px;
+  border-radius: 16px;
+  border: none;
+  background-color: var(--cercle);
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-confirm {
+  font-size: 0.75rem;
+  margin: 6px 0 0 0;
+  color: var(--cercle);
+  font-weight: 600;
+}
+
+.history-section {
+  width: 100%;
+  text-align: left;
+}
+
+.history-section h3 {
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.history-item {
+  background-color: var(--fond);
+  border-radius: 10px;
+  padding: 8px;
+  position: relative;
+  border: 1px solid var(--bouton-fond);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding-right: 16px;
+}
+
+.history-date {
+  opacity: 0.6;
+  font-size: 0.65rem;
+}
+
+.history-note {
+  margin: 3px 0 0 0;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  color: var(--texte);
+  opacity: 0.4;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+}
+
+/* ==========================================
+   7. ÉCRAN DE CHARGEMENT (CORRIGÉ ABSOLU)
+   ========================================== */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #dddac6;
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;     /* Centre verticalement */
+  z-index: 9999;
+  margin: 0;
+  padding: 0;
+}
+
+.splash-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.splash-logo-video {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  margin: 0 auto; /* Force le centrage */
+  display: block;
+  object-fit: contain;
+  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 98%);
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 98%);
+}
+
+/* ==========================================
+   8. ÉCRAN DE BIENVENUE
+   ========================================== */
+/* ==========================================
+   8. ÉCRAN DE BIENVENUE (MODALE)
+   ========================================== */
+.modal-overlay { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh; 
+  background-color: rgba(0, 0, 0, 0.7); /* Un fond bien opaque pour cacher l'app derrière */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  z-index: 9999; /* S'assure qu'elle est tout au premier plan */
+}
+
+/* La carte à l'intérieur de la modale */
+.modal-overlay .card {
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.modal-overlay input[type="text"] {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 16px;
+  margin: 20px 0;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.modal-overlay input[type="text"]:focus {
+  border-color: #93c5fd;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.2);
+}
+
+/* Styles pour le bloc de statistiques */
+.stats-box { 
+  background: #f4f7f6; 
+  padding: 15px; 
+  border-radius: 12px; 
+  margin: 15px 0; 
+  text-align: center;
+}
+
+.stat-pill { 
+  display: inline-block; 
+  padding: 6px 14px; 
+  background: #d1e7dd; 
+  color: #0f5132;
+  border-radius: 20px; 
+  margin: 5px; 
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+/* Ajustement pour le mode nuit */
+.dark-mode .stats-box { 
+  background: #2a2a2a; 
+}
+
+.dark-mode .stat-pill { 
+  background: #3e5d4d; 
+  color: #d1e7dd;
+}
