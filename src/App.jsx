@@ -30,7 +30,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   
-  // Nouveaux états
   const [userName, setUserName] = useState(localStorage.getItem('user_name') || '');
   const [showNameModal, setShowNameModal] = useState(!localStorage.getItem('user_name'));
   
@@ -45,7 +44,6 @@ export default function App() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [affirmation, setAffirmation] = useState('');
 
-  // Statistiques de la semaine
   const getWeeklyStats = () => {
     const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
     const weeklyEntries = history.filter(item => item.timestamp > oneWeekAgo);
@@ -136,17 +134,28 @@ export default function App() {
         </div>
       ) : (
         <>
-          <header className="app-header">
-            <div className="logo">🍃 Respire</div>
+         <header className="app-header">
+          <div className="logo">🍃 Respire</div>
+          
+          <div className="menu-container">
             <button className="icon-btn" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
+            
             {menuOpen && (
               <nav className="dropdown-menu">
-                <button onClick={() => { setCurrentView('respiration'); setMenuOpen(false); }}>Respiration</button>
-                <button onClick={() => { setCurrentView('journal'); setMenuOpen(false); }}>Journal</button>
-                <button onClick={() => { setDarkMode(!darkMode); setMenuOpen(false); }}>{darkMode ? 'Mode Jour' : 'Mode Nuit'}</button>
+                <button className="menu-item" onClick={() => { setCurrentView('respiration'); setMenuOpen(false); }}>
+                  🍃 Respiration
+                </button>
+                <button className="menu-item" onClick={() => { setCurrentView('journal'); setMenuOpen(false); }}>
+                  📖 Journal
+                </button>
+                <hr className="menu-divider" />
+                <button className="menu-action-btn" onClick={() => { setDarkMode(!darkMode); setMenuOpen(false); }}>
+                  {darkMode ? '☀️ Mode Jour' : '🌙 Mode Nuit'}
+                </button>
               </nav>
             )}
-          </header>
+          </div>
+        </header>
 
           <main className="main-wrapper">
             {currentView === 'respiration' && (
@@ -159,7 +168,7 @@ export default function App() {
                       <div className="controls">
                         {BREATHING_TECHNIQUES.map((t) => (
                           <button 
-                            key={t.id} 
+                            key={t.id}
                             className={`btn-rhythm ${technique.id === t.id ? 'active' : ''}`} 
                             onClick={() => setTechnique(t)}
                           >
@@ -171,24 +180,24 @@ export default function App() {
                     </>
                   ) : (
                     <>
-                    <h1>{technique.label}</h1>
-                    <div className="cercle-wrapper">
-                      <div className="cercle" style={{ animationDuration: `${technique.duration}s` }}>
-                        <span className="cercle-text">{breathText}</span>
+                      <h1>{technique.label}</h1>
+                      <div className="cercle-wrapper">
+                        <div className="cercle" style={{ animationDuration: `${technique.duration}s` }}>
+                          <span className="cercle-text">{breathText}</span>
+                        </div>
                       </div>
-                    </div>
-                    
-                    {timeLeft !== -1 ? (
-                      <p className="subtitle">Temps restant : {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</p>
-                    ) : (
-                      <p className="subtitle">Mode libre : respire à ton rythme.</p>
-                    )}
-                    
-                    <button className="btn-rhythm" onClick={() => setIsBreathing(false)} style={{ marginTop: '20px' }}>
-                      Arrêter
-                    </button>
-                  </>
-                )}
+                      
+                      {timeLeft !== -1 ? (
+                        <p className="subtitle">Temps restant : {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</p>
+                      ) : (
+                        <p className="subtitle">Mode libre : respire à ton rythme.</p>
+                      )}
+                      
+                      <button className="btn-rhythm" onClick={() => setIsBreathing(false)} style={{ marginTop: '20px' }}>
+                        Arrêter
+                      </button>
+                    </>
+                  )}
                 </div>
               </section>
             )}
@@ -196,13 +205,53 @@ export default function App() {
             {currentView === 'journal' && (
               <section className="app-view">
                 <div className="card">
-                  <div className="stats-box">
-                    <h3>Ton résumé de la semaine</h3>
-                    {Object.entries(getWeeklyStats()).map(([mood, count]) => (
-                      <span key={mood} className="stat-pill">{mood} : {count}</span>
+                  <h2>Mon Journal & Ressenti</h2>
+                  <p className="subtitle">Comment te sens-tu en ce moment ?</p>
+                  
+                  <div className="mood-selector" style={{ display: 'flex', gap: '10px', margin: '20px 0', justifyContent: 'center' }}>
+                    {MOODS.map(m => (
+                      <button 
+                        key={m.id} 
+                        onClick={() => setSelectedMood(m)}
+                        style={{ 
+                          background: selectedMood?.id === m.id ? 'var(--primary-color, #4f46e5)' : 'rgba(255,255,255,0.1)', 
+                          border: 'none', 
+                          padding: '10px', 
+                          borderRadius: '8px', 
+                          cursor: 'pointer',
+                          fontSize: '1.2rem' 
+                        }}
+                      >
+                        {m.emoji}
+                      </button>
                     ))}
                   </div>
-                  {/* ... reste du code journal ... */}
+
+                  <textarea 
+                    value={note} 
+                    onChange={(e) => setNote(e.target.value)} 
+                    placeholder="Ajouter une petite note sur ton état d'esprit..."
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', marginBottom: '15px', background: 'rgba(255,255,255,0.05)', color: 'inherit', border: '1px solid rgba(255,255,255,0.2)' }}
+                  />
+
+                  <button className="btn-save" onClick={handleSaveEntry}>Enregistrer mon ressenti</button>
+
+                  {showConfirm && <p style={{ color: 'green', marginTop: '10px' }}>Enregistré avec succès !</p>}
+
+                  <div className="history-list" style={{ marginTop: '30px', textAlign: 'left' }}>
+                    <h3>Historique des sessions</h3>
+                    {history.length === 0 ? (
+                      <p style={{ opacity: 0.7 }}>Aucune entrée pour le moment.</p>
+                    ) : (
+                      history.map(item => (
+                        <div key={item.id} style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '8px', margin: '10px 0' }}>
+                          <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{item.date}</span>
+                          {item.mood && <p style={{ margin: '5px 0' }}>Ressenti : {item.mood.emoji} {item.mood.label}</p>}
+                          {item.note && <p style={{ margin: '5px 0', fontStyle: 'italic' }}>"{item.note}"</p>}
+                        </div>
+                      ))
+                    )}
+                  </div>
                 </div>
               </section>
             )}
