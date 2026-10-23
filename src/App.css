@@ -2,31 +2,33 @@
    1. VARIABLES GLOBALES (:root)
    ========================================== */
 :root {
-  /* Mode Jour : Palette "Lumière & Fraîcheur" */
-  --fond: #f8f9fa;            /* Blanc cassé très propre */
-  --card-fond: #ffffff;       /* Blanc pur pour la carte */
-  --cercle: #a0c4ff;          /* Bleu pastel doux */
-  --cercle-glow: rgba(160, 196, 255, 0.4); 
-  --texte: #2d3436;          /* Gris foncé bleuté pour le confort */
-  --bouton-fond: #f1f3f5;     /* Gris très clair */
-  --bouton-hover: #e9ecef;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* Ombre beaucoup plus légère */
+  /* Mode Jour : fond vert d'eau qui glisse vers le bleu */
+  --fond: #d2ccb5;            /* beige sable, proche de ton écran de démarrage */
+  --fond-degrade: #c8bda5;    /* légèrement plus chaud en bas */
+  --card-fond: #ddd8c5;
+  --cercle: #b9946e;          /* argile douce */
+  --cercle-glow: rgba(185, 148, 110, 0.4);
+  --texte: #3a3326;
+  --bouton-fond: #c8c1a9;
+  --bouton-hover: #b9b196;
+  --shadow: 0 10px 30px rgba(60, 45, 20, 0.12);
 }
 
 /* Mode Nuit : Palette "Profondeur & Sérénité" */
 .dark-mode {
-  --fond: #0f172a;            /* Bleu nuit très profond */
-  --card-fond: #1e293b;       /* Gris bleuté sombre */
-  --cercle: #5eead4;          /* Vert d'eau lumineux (teal) */
-  --cercle-glow: rgba(94, 234, 212, 0.2);
-  --texte: #f1f5f9;          /* Blanc bleuté très doux */
-  --bouton-fond: #334155;
-  --bouton-hover: #475569;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --fond: #1f1b17;            /* brun très sombre, pas de noir pur */
+  --fond-degrade: #2b2520;
+  --card-fond: #2d2823;
+  --cercle: #c9a27a;          /* ambre doux */
+  --cercle-glow: rgba(201, 162, 122, 0.2);
+  --texte: #e6dccb;           /* crème, pas de blanc pur */
+  --bouton-fond: #413a32;
+  --bouton-hover: #52493f;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 /* ==========================================
-   2. STYLES BASE & BODY (CORRIGÉ MOBILE)
+   2. STYLES BASE & BODY
    ========================================== */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -45,22 +47,22 @@ html, body, #root {
 }
 
 .app-container {
-  background-color: var(--fond);
+  background: linear-gradient(160deg, var(--fond), var(--fond-degrade));
   color: var(--texte);
   min-height: 100vh;
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: background-color 0.6s ease, color 0.6s ease;
+  transition: color 0.6s ease;
   overflow: hidden;
 }
 
 /* ==========================================
-   3. HEADER & MENU DÉROULANT (CORRIGÉ)
+   3. HEADER & MENU DÉROULANT
    ========================================== */
 .app-header {
-  position: relative; /* Évite de décaler le flux principal */
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,7 +84,6 @@ html, body, #root {
   position: relative;
 }
 
-/* Bouton hamburger */
 .icon-btn {
   background: transparent;
   border: none;
@@ -99,7 +100,6 @@ html, body, #root {
   background-color: var(--bouton-fond);
 }
 
-/* Menu déroulant */
 .dropdown-menu {
   position: absolute;
   top: 45px;
@@ -112,13 +112,7 @@ html, body, #root {
   z-index: 1000;
 }
 
-.dropdown-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.menu-item, 
+.menu-item,
 .menu-action-btn {
   width: 100%;
   text-align: left;
@@ -138,7 +132,7 @@ html, body, #root {
   transition: background-color 0.2s ease;
 }
 
-.menu-item:hover, 
+.menu-item:hover,
 .menu-action-btn:hover,
 .menu-item.active {
   background-color: var(--bouton-fond);
@@ -149,7 +143,6 @@ html, body, #root {
   height: 1px;
   background-color: var(--bouton-fond);
   margin: 6px 0;
-  list-style: none;
 }
 
 /* ==========================================
@@ -185,16 +178,10 @@ html, body, #root {
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: background-color 0.6s ease, box-shadow 0.6s ease;
 }
-/* ==========================================
-   5. CERCLE DE RESPIRATION
-   ========================================== */
-.card-header h1 {
-  font-size: 1.5rem;
-  margin: 0 0 8px 0;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
 
+/* ==========================================
+   5. RESPIRATION
+   ========================================== */
 .subtitle {
   margin: 0;
   font-size: 0.9rem;
@@ -202,19 +189,31 @@ html, body, #root {
   font-weight: 500;
 }
 
+.affirmation {
+  margin: 0;
+  width: 100%;
+  background-color: var(--bouton-fond);
+  padding: 12px 15px;
+  border-radius: 18px;
+  font-style: italic;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
 .cercle-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 220px; /* Agrandit l'espace du cercle */
+  height: 220px;
   width: 100%;
   margin: 10px 0;
 }
 
 .cercle {
-  width: 150px;   /* Cercle plus grand et impactant */
+  width: 150px;
   height: 150px;
   background: linear-gradient(135deg, var(--cercle), var(--bouton-hover));
+  border: 8px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   box-shadow: 0 0 50px var(--cercle-glow), inset 0 0 20px rgba(255, 255, 255, 0.2);
   display: flex;
@@ -223,8 +222,6 @@ html, body, #root {
   text-align: center;
   transition: background 0.6s ease, box-shadow 0.6s ease;
   animation: respirerOrganique 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-border: 8px solid rgba(255, 255, 255, 0.1);
-  background: conic-gradient(var(--cercle) var(--progress, 0%), transparent 0%);
 }
 
 .cercle-text {
@@ -256,7 +253,7 @@ border: 8px solid rgba(255, 255, 255, 0.1);
 
 .controls {
   display: flex;
-  flex-direction: column; /* Passe les boutons en colonne pour un look plus "app mobile pro" */
+  flex-direction: column;
   gap: 10px;
   width: 100%;
 }
@@ -265,8 +262,8 @@ border: 8px solid rgba(255, 255, 255, 0.1);
   padding: 12px 16px;
   border-radius: 16px;
   border: none;
-  background-color: var(--bouton-fond);
-  color: var(--texte);
+  background-color: var(--cercle);
+  color: #2a2118; /* texte foncé : lisible sur le teal en jour comme en nuit */
   font-family: inherit;
   font-weight: 600;
   font-size: 0.9rem;
@@ -278,97 +275,52 @@ border: 8px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-rhythm:hover {
-  background-color: var(--bouton-hover);
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--cercle-glow);
 }
 
-.btn-rhythm.active {
+.btn-save {
+  width: 100%;
+  padding: 10px;
+  border-radius: 16px;
+  border: none;
   background-color: var(--cercle);
-  color: #ffffff;
-  box-shadow: 0 4px 15px var(--cercle-glow);
-  transform: translateY(-2px);
+  color: #2a2118;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 /* ==========================================
    6. JOURNAL & HISTORIQUE
    ========================================== */
-.journal-card {
-  gap: 16px;
-}
-
-.affirmation-box {
-  background-color: var(--bouton-fond);
-  padding: 12px 15px;
-  border-radius: 18px;
-  font-style: italic;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  width: 100%;
-}
-
-.sparkles {
-  font-size: 1rem;
-  display: block;
-  margin-bottom: 2px;
-}
-
-.card-divider {
-  border: 0;
-  height: 1px;
-  background-color: var(--bouton-fond);
-  width: 100%;
-  margin: 0;
-}
-
-.mood-tracker {
-  width: 100%;
-}
-
-.mood-tracker h3 {
-  font-size: 0.95rem;
-  margin: 0 0 10px 0;
-  font-weight: 600;
-}
-
-.mood-options {
+.mood-selector {
   display: flex;
   justify-content: space-between;
-  gap: 4px;
-  margin-bottom: 10px;
+  gap: 6px;
+  width: 100%;
 }
 
 .mood-btn {
+  flex: 1;
   background: var(--bouton-fond);
   border: 2px solid transparent;
   border-radius: 12px;
-  padding: 6px 2px;
+  padding: 8px 2px;
+  font-size: 1.4rem;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  flex: 1;
   transition: all 0.2s ease;
 }
 
-.mood-emoji {
-  font-size: 1.1rem;
-}
-
-.mood-label {
-  font-size: 0.6rem;
-  font-family: inherit;
-  color: var(--texte);
-  font-weight: 600;
-}
-
-.mood-btn:hover, .mood-btn.selected {
+.mood-btn:hover,
+.mood-btn.selected {
   border-color: var(--cercle);
   background: var(--card-fond);
 }
 
 textarea {
   width: 100%;
+  min-height: 80px;
   border: 1px solid var(--bouton-fond);
   background-color: var(--fond);
   color: var(--texte);
@@ -378,85 +330,68 @@ textarea {
   font-size: 0.85rem;
   resize: none;
   outline: none;
-  margin-bottom: 6px;
 }
 
 textarea:focus {
   border-color: var(--cercle);
 }
 
-.btn-save {
-  width: 100%;
-  padding: 10px;
-  border-radius: 16px;
-  border: none;
-  background-color: var(--cercle);
-  color: #ffffff;
-  font-family: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.save-confirm {
-  font-size: 0.75rem;
-  margin: 6px 0 0 0;
+.confirm-message {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: var(--cercle);
-  font-weight: 600;
-}
-
-.history-section {
-  width: 100%;
-  text-align: left;
-}
-
-.history-section h3 {
-  font-size: 0.9rem;
-  margin: 0 0 8px 0;
-  font-weight: 600;
 }
 
 .history-list {
+  width: 100%;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  max-height: 150px;
+  gap: 8px;
+  max-height: 250px;
   overflow-y: auto;
-  padding-right: 2px;
+}
+
+.history-list h3 {
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.history-empty {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
 }
 
 .history-item {
-  background-color: var(--fond);
-  border-radius: 10px;
-  padding: 8px;
   position: relative;
+  background-color: var(--fond);
   border: 1px solid var(--bouton-fond);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.8rem;
 }
 
-.history-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding-right: 16px;
+.history-item p {
+  margin: 4px 0 0 0;
 }
 
 .history-date {
+  font-size: 0.7rem;
   opacity: 0.6;
-  font-size: 0.65rem;
 }
 
 .history-note {
-  margin: 3px 0 0 0;
-  font-size: 0.75rem;
   font-style: italic;
   opacity: 0.9;
 }
 
 .delete-btn {
   position: absolute;
-  top: 4px;
-  right: 6px;
+  top: 6px;
+  right: 8px;
   background: transparent;
   border: none;
   color: var(--texte);
@@ -471,7 +406,7 @@ textarea:focus {
 }
 
 /* ==========================================
-   7. ÉCRAN DE CHARGEMENT (CORRIGÉ ABSOLU)
+   7. ÉCRAN DE CHARGEMENT
    ========================================== */
 .splash-screen {
   position: fixed;
@@ -481,25 +416,18 @@ textarea:focus {
   height: 100vh;
   background-color: #dddac6;
   display: flex;
-  justify-content: center; /* Centre horizontalement */
-  align-items: center;     /* Centre verticalement */
+  justify-content: center;
+  align-items: center;
   z-index: 9999;
   margin: 0;
   padding: 0;
-}
-
-.splash-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
 }
 
 .splash-logo-video {
   width: 100%;
   max-width: 450px;
   height: auto;
-  margin: 0 auto; /* Force le centrage */
+  margin: 0 auto;
   display: block;
   object-fit: contain;
   -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 98%);
@@ -509,29 +437,25 @@ textarea:focus {
 /* ==========================================
    8. ÉCRAN DE BIENVENUE (MODALE)
    ========================================== */
-.modal-overlay { 
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 100vw; 
-  height: 100vh; 
-  background-color: rgba(0, 0, 0, 0.7); /* Un fond bien opaque pour cacher l'app derrière */
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  z-index: 9999; /* S'assure qu'elle est tout au premier plan */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-/* La carte à l'intérieur de la modale */
 .modal-overlay .card {
   width: 90%;
   max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
   padding: 30px;
-  background: #ffffff;
+  background: var(--card-fond);
+  color: var(--texte);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
 }
@@ -541,47 +465,48 @@ textarea:focus {
   max-width: 300px;
   padding: 12px 16px;
   margin: 20px 0;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--bouton-hover);
   border-radius: 12px;
   font-size: 1rem;
+  color: var(--texte);
   outline: none;
   transition: all 0.3s ease;
-  background-color: #fafafa;
+  background-color: var(--fond);
   text-align: center;
 }
 
 .modal-overlay input[type="text"]:focus {
-  border-color: #93c5fd;
-  background-color: #fff;
-  box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.2);
+  border-color: var(--cercle);
+  box-shadow: 0 0 0 4px var(--cercle-glow);
 }
 
-/* Styles pour le bloc de statistiques */
-.stats-box { 
-  background: #f4f7f6; 
-  padding: 15px; 
-  border-radius: 12px; 
-  margin: 15px 0; 
+/* ==========================================
+   9. STATISTIQUES (pas encore utilisées)
+   ========================================== */
+.stats-box {
+  background: #f4f7f6;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 15px 0;
   text-align: center;
 }
 
-.stat-pill { 
-  display: inline-block; 
-  padding: 6px 14px; 
-  background: #d1e7dd; 
+.stat-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #d1e7dd;
   color: #0f5132;
-  border-radius: 20px; 
-  margin: 5px; 
+  border-radius: 20px;
+  margin: 5px;
   font-size: 0.9em;
   font-weight: 500;
 }
 
-/* Ajustement pour le mode nuit */
-.dark-mode .stats-box { 
-  background: #2a2a2a; 
+.dark-mode .stats-box {
+  background: #2a2a2a;
 }
 
-.dark-mode .stat-pill { 
-  background: #3e5d4d; 
+.dark-mode .stat-pill {
+  background: #3e5d4d;
   color: #d1e7dd;
 }

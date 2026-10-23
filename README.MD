@@ -6,9 +6,10 @@
 
 - **Exercices de respiration guidés :** Animation visuelle fluide pour rythmer vos inspirations et expirations.
 - **Personnalisation :** Accueil personnalisé avec votre prénom (sauvegardé en local).
-- **Choix des techniques :** Plusieurs rythmes de respiration adaptés à vos besoins (cohérence cardiaque, relaxation, apaisement rapide, etc.).
-- **Mode Nuit / Mode Jour :** Interface adaptable pour un confort visuel optimal de jour comme de nuit.
-- **Journal et Ressenti :** Enregistrement des sessions avec choix de l'humeur/ressenti, ajout de notes personnelles et historique complet.
+- **Choix des techniques :** Plusieurs rythmes de respiration (cohérence cardiaque, relaxation, apaisement rapide, etc.), lancés directement d'un clic.
+- **Affirmation du jour :** Une phrase apaisante différente chaque jour.
+- **Mode Nuit / Mode Jour :** Interface adaptable, avec des couleurs chaudes et douces pour limiter la fatigue visuelle.
+- **Journal et Ressenti :** Choix de l'humeur, ajout d'une note personnelle, et historique des entrées (avec suppression possible).
 
 ## 🚀 Technologies utilisées
 
@@ -20,17 +21,22 @@
 
 ## 📦 Installation locale
 
-Si vous souhaitez lancer le projet en local sur votre machine, suivez ces étapes :
-
 1. **Clonez le dépôt :**
+   ```bash
+   git clone https://github.com/aurelieichelmann/Mon-app-respire.git
+   ```
 
-   git clone [https://github.com/aurelieichelmann/Mon-app-respire.git](https://github.com/aurelieichelmann/Mon-app-respire.git)
-2. **Entrez dans le dossier projet** 
+2. **Entrez dans le dossier du projet :**
+   ```bash
+   cd Mon-app-respire
+   ```
 
-cd mon-app-respire
+3. **Installez les dépendances :**
+   ```bash
+   npm install
+   ```
 
-3. **Installez les dépendances** 
-npm install
-
-4. **Lancez le serveur**
-npm run dev
+4. **Lancez le serveur :**
+   ```bash
+   npm run dev
+   ```
