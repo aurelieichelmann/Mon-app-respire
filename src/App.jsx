@@ -73,11 +73,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBreathText((prev) => (prev === 'Inspire...' ? 'Expire...' : 'Inspire...'));
-    }, (technique.duration * 1000) / 2);
-    return () => clearInterval(interval);
-  }, [technique]);
+  if (!isBreathing) return;
+  const interval = setInterval(() => {
+    setBreathText((prev) => (prev === 'Inspire...' ? 'Expire...' : 'Inspire...'));
+  }, (technique.duration * 1000) / 2);
+  return () => clearInterval(interval);
+}, [technique, isBreathing]);
 
   useEffect(() => {
     if (isBreathing && timeLeft > 0) {
@@ -88,10 +89,10 @@ export default function App() {
     }
   }, [isBreathing, timeLeft]);
 
-  const startSession = () => {
-    setIsBreathing(true);
-    setTimeLeft(technique.id === 'libre' ? -1 : 180); 
-  };
+ const startSession = () => {
+  setIsBreathing(true);
+  setTimeLeft(technique.id === 'libre' ? -1 : technique.duration * 6); // ex: 6 cycles
+};
 
   const handleSaveEntry = () => {
     if (!selectedMood && !note.trim()) return;
