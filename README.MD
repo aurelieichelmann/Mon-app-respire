@@ -23,8 +23,14 @@
 Si vous souhaitez lancer le projet en local sur votre machine, suivez ces étapes :
 
 1. **Clonez le dépôt :**
-   ```bash
+
    git clone [https://github.com/aurelieichelmann/Mon-app-respire.git](https://github.com/aurelieichelmann/Mon-app-respire.git)
-   cd Mon-app-respire
-   npm install
-   npm run dev
+2. **Entrez dans le dossier projet** 
+
+cd mon-app-respire
+
+3. **Installez les dépendances** 
+npm install
+
+4. **Lancez le serveur**
+npm run dev
